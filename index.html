@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meal Planner</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- HEADER -->
+    <div class="p-4 text-white bg-gradient-to-r from-green-400 to-green-700">
+      <h1 class="text-xl font-bold">🥗 Daily Meal Planner</h1>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="p-4 max-w-xl mx-auto">
+      <button
+        onclick="generateMeal()"
+        class="w-full bg-black text-white py-3 rounded-lg mb-4 text-lg"
+      >
+        Generate Today’s Meal
+      </button>
+
+      <div id="mealPlan" class="space-y-3"></div>
+    </div>
+
+   <script>
+function random(arr){
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generateMeal() {
+
+  const breakfastOptions = [
+    "2 Idli + Peanut chutney (1 tbsp) + Skyr (1/2 cup)",
+    "1 Dosa + Coconut chutney (1 tbsp) + Tofu (150g)",
+    "Vegetable upma (200g) + Curd (1 bowl)",
+    "2 Idli + Idli podi (1 tbsp) + Soy chunks (30g)",
+    "1 Dosa + Tomato chutney + Skyr (1/2 cup)",
+    "Vegetable poha (200g) + Peanuts (10g) + Curd",
+    "Ragi dosa (1–2) + Tofu (150g)",
+    "Vegetable uthappam (1 medium) + Peanut chutney (1 tbsp)",
+    "Curd + Peanut powder (1 tbsp) + 1 small fruit",
+    "Skyr (1 cup) + Roasted chana (20g)"
+  ];
+
+  const snacks = [
+    "Roasted chana (20–25g)",
+    "Peanuts - dry roasted (15–20g)",
+    "Almonds (10–12 pieces ~15g)",
+    "Makhana / fox nuts (20g roasted)",
+    "Skyr (1 cup 150–200g)",
+    "Curd (1 bowl)",
+    "Soy chunks (25g dry boiled)",
+    "Boiled corn (1 small bowl)",
+    "Fruit (1 medium) + 10g peanuts",
+    "Peanut chutney powder (1 tbsp) + cucumber"
+  ];
+
+  const lunchOptions = [
+    "Rice (1 cup) + Vegetable kootu + Beans poriyal + Curd",
+    "Rice (1 cup) + Rasam + Cabbage poriyal + Curd",
+    "Rice (1 cup) + Tomato rasam + Carrot poriyal + Curd",
+    "2 Chapati + Tofu (150g) + Vegetable curry",
+    "2 Chapati + Soy chunks (50g) + Vegetable curry",
+    "Vegetable upma (250g) + Curd",
+    "Curd rice (1 cup) + Carrot + Peanut powder (1 tbsp)",
+    "Lemon rice (1 cup) + Curd + Roasted chana (15g)"
+  ];
+
+  const dinnerOptions = [
+    "2 Chapati + Tofu (150–200g) + Beans poriyal",
+    "2 Chapati + Soy chunks (50g) + Cabbage poriyal",
+    "2 Chapati + Paneer (150g) + Mixed vegetable curry",
+    "Tofu (200g) + Stir fried vegetables",
+    "Soy chunks (50g) + Vegetable curry (no chapati)",
+    "Paneer (150g) + Vegetable sauté",
+    "Curd (1 bowl) + Peanut powder (1 tbsp) + Vegetable salad",
+    "Skyr (1 cup) + Roasted chana (20g) (light dinner)"
+  ];
+
+  const exercises = [
+    "Brisk walking (30–45 mins)",
+    "Incline walking (20 mins)",
+    "Skipping (5 × 2 min rounds)",
+    "Bodyweight squats (3 × 15 reps)",
+    "Push-ups (3 × 10 reps)",
+    "Plank (3 × 45 sec)",
+    "Stair climbing (15–20 mins)",
+    "Cycling (30 mins)",
+    "Surya namaskar (10–15 rounds)",
+    "Burpees (3 × 10 reps)"
+  ];
+
+  const videos = [
+    "https://www.youtube.com/embed/ml6cT4AZdqI",
+    "https://www.youtube.com/embed/UBMk30rjy0o",
+    "https://www.youtube.com/embed/IT94xC35u6k"
+  ];
+
+  const mealHTML = `
+    <div class="bg-white p-4 rounded-xl shadow space-y-3">
+
+      <p><b>🌅 Morning:</b> Methi water (500ml) + Whey protein</p>
+
+      <p><b>🍽 Breakfast:</b><br>${random(breakfastOptions)}</p>
+
+      <p><b>🍛 Lunch:</b><br>${random(lunchOptions)}</p>
+
+      <p><b>☕ Evening:</b><br>${random(snacks)} + Tea (stevia)</p>
+
+      <p><b>🌙 Dinner:</b><br>${random(dinnerOptions)}</p>
+
+      <hr>
+
+      <p><b>🏃 Today’s Workout:</b><br>${random(exercises)}</p>
+
+      <div>
+        <p class="font-semibold mb-1">🎥 Try this workout:</p>
+        <iframe class="w-full rounded-lg" height="200" src="${random(videos)}" 
+        frameborder="0" allowfullscreen></iframe>
+      </div>
+
+      <div id="quote" class="italic text-center text-gray-600">Loading quote...</div>
+
+    </div>
+  `;
+
+  document.getElementById("mealPlan").innerHTML = mealHTML;
+
+  // Fetch quote
+  fetch("https://api.quotable.io/random")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("quote").innerText = `"${data.content}" — ${data.author}`;
+    })
+    .catch(() => {
+      document.getElementById("quote").innerText = "Stay consistent. That’s what actually works.";
+    });
+}
+</script>
+  </body>
+</html>
